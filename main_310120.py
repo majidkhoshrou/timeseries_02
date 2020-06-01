@@ -16,7 +16,7 @@ plt.style.available
 plt.style.use('fivethirtyeight')
 
 # generate timeseries
-n1 = 400
+n1 = 50
 n2 = 200
 sigma = 10
 mu = .1
@@ -133,6 +133,28 @@ plt.savefig("anomaly03.png")
 #
 #plt.show()
 ######################
+
+import numpy
+from scipy import stats
+
+def get_pdf(x):
+  x = numpy.array(x)
+  auxVar = stats.norm.pdf(x, loc =numpy.mean(x), scale=numpy.std(x))
+  auxVar = auxVar/numpy.sum(auxVar)
+  a = auxVar[-1]
+  return a
+
+df1.rolling(7).apply(lambda x: get_pdf(x), raw=False)
+
+
+
+# ecdf
+
+x = np.array([2,2,4])
+
+x = np.sort(x)
+y = np.arange(1,len(x)+1)/len(x)
+
 
 
 
